@@ -1,0 +1,1042 @@
+/*General style properties*/
+
+@font-face {
+    font-family: "OpenSansHebrew";
+    src: url("../fonts/OpenSansHebrew-Bold.ttf"), url("../fonts/OpenSansHebrew-BoldItalic.ttf"), url("../fonts/OpenSansHebrew-ExtraBold.ttf"), url("../fonts/OpenSansHebrew-ExtraBoldItalic.ttf"), url("../fonts/OpenSansHebrew-Italic.ttf"), url("../fonts/OpenSansHebrew-Light.ttf"), url("../fonts/OpenSansHebrew-LightItalic.ttf"), url("../fonts/OpenSansHebrew-Regular.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+/*hidden items*/
+.hidden {
+	visibility: hidden;
+}
+/*table style*/
+.table {
+	display: table-cell;
+	vertical-align: middle;
+}
+.screen {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    /*height: 100%;
+    width: 100%;*/
+    min-width: 1200px;
+    width: 1920px;
+    height: 1080px;
+    background-image: linear-gradient(to bottom, #212732, #3c4351 49%, #2f3541);
+}
+.no-image-back {
+	width: 100%;/*px;*/
+	background-image: none;
+	background-color: rgba(22, 22, 22, 0.5);
+	-webkit-box-shadow: 0px 0px 48px 51px rgba(22,22,22,0.5);
+	display: table;	
+}
+/*transparent background*/
+.transparent-screen {
+	 background-color: rgba(22, 22, 22, 0.5);
+	 background-image: none;
+	 display: table;
+}
+/*background for blurring index screen*/
+.options {
+    background-image: url('images/background.png')
+}
+.filtered-background {
+    width: 100%;
+    height: 100%;  
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    -webkit-filter: blur(20px);
+    -moz-filter: blur(20px);
+    -o-filter: blur(20px);
+    -ms-filter: blur(20px);
+    filter: blur(20px);
+}
+/*home and back buttons*/
+.button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.back-container {
+    position: fixed;
+    right: 72px;
+    top: 18px;
+    border: pink;
+    width: 115px;
+    height: 115px;
+}
+.home-container {
+    position: fixed;
+    right: 172px;
+    top: 18px;
+    border: pink;
+    width: 115px;
+    height: 115px;
+}
+
+/*for home button close to right side*/
+.close-to-right {
+	right: 72px;
+}
+/*list container for actor movies and search results*/
+.movies-list-container {
+    position: relative;
+    width: 1920px;
+    height: 477px;
+    overflow: hidden;
+    border: 1px solid transparent;
+}
+
+/** INTRO **/
+#introContainer {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 5;
+}
+#intro {
+	z-index: 5;
+	
+}
+
+/** INDEX SCREEN **/
+
+#logoContainer {
+	position: absolute;
+	top: 0px;
+	left: 18px;
+	width: 349px;
+	height: 132px;
+/* 	background-color: pink; */
+}
+#logo {
+	position: relative;
+	top: 29px;
+	left: 48px;
+}
+/*search button on the index screen*/
+#searchCircle {
+    position: absolute;
+    right: 96px;
+    top: 34px;
+    width: 65px;
+    height: 65px;
+    border-radius: 100px;
+    /*border: ;*/
+    background-color: #06B0E8;
+}
+#searchCircle.focused {
+    box-shadow: 0 0 15px 6px rgba(0, 200, 255, 0.5), inset 0 0 15px 6px rgba(0, 200, 255, 0.5);
+    width: 75px;
+    height: 75px;
+    top: 29px;
+    right: 91px;
+}
+#searchIcon {
+    position: fixed;
+    right: 118px;
+    top: 56px;
+/* 	position: absolute; */
+/* 	top: 50%; */
+/* 	left: 50%; */
+/* 	transform: translate(-50%, -50%); */
+}
+/*icons for search and sort options on the index screen*/
+.dropdown {
+    width: 356.2px;
+    height: 66px;
+    border-radius: 100px;
+    border: solid 2px rgba(151, 151, 151,1);
+}
+.dropdown-disabled {
+    width: 356.2px;
+    height: 66px;
+    border-radius: 100px;
+    border: solid 2px rgba(151, 151, 151,0.3);	
+	
+}
+.dropdown.focused {
+    width: 356.2px;
+    height: 66px;
+    border-radius: 100px;
+    box-shadow: 0 0 15px 6px rgba(0, 200, 255, 0.5), inset 0 0 15px 6px rgba(0, 200, 255, 0.5);
+    border: solid 3px #2ccbff;
+}
+.dropdown-arrow {
+    position: absolute;
+    left: 31.3px;
+    top: 29.9px;
+}
+.dropdown-text {
+    position: absolute;
+    right: 28.5px;
+    top: 11.8px;
+    font-family: OpenSansHebrew;
+    font-size: 28.9px;
+    font-weight: 700;
+    color: #2ccbff;
+}
+.dropdown-text-disabled {
+    position: absolute;
+    right: 28.5px;
+    top: 11.8px;
+    font-family: OpenSansHebrew;
+    font-size: 28.9px;
+    font-weight: 700;
+    color: rgba(151, 151, 151,0.3);
+}
+/*sort button on the index screen*/
+#sort {
+    position: absolute;
+    right: 604px;
+    top: 33px;
+}
+/*filter button on the index screen*/
+#filter {
+    position: absolute;
+    right: 205px;
+    top: 33px;
+}
+/*caph-list of movies on index screen*/
+#movieListContainer {
+    position: relative;
+    top: 128px;
+    height: 100%;
+}
+.movie-list {
+    position: relative;
+    width: 1920px;
+    height: 953px;
+    overflow: hidden;
+    border: 1px solid transparent;
+}
+.movie-list-item {  
+    box-sizing: border-box;
+    width: 208.4px;
+    height: 394.7px;
+    margin-bottom: 26.1px;
+    margin-right: 17.5px;
+    margin-left: 17.5px;
+    margin-top: 36.2px;
+}
+.movie-poster {
+    width: 208.4px;
+    height: 310.9px;
+}
+.movie-poster.focused {
+    position: relative;
+    top: -28px;
+    margin-bottom: -28px;
+    right: 5.6%;
+    width: 229.24px;
+    height: 342px;
+    box-shadow: 0 0 30px 0 rgba(0, 200, 255, 0.5);
+    border: solid 3px #2ccbff;
+}
+.movie-title {
+    position: relative;
+    text-align: right;
+    top: 15.8px;
+    right: 0px;
+    width: 100%;
+    height: 33px;
+    font-family: OpenSansHebrew;
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    overflow: hidden;
+}
+.movie-year {
+    position: relative;
+    top: 15px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    font-family: OpenSansHebrew;
+    font-size: 22px;
+    font-weight: 400;
+    text-align: right;
+    color: #ffffff;
+}
+#movieTitle {
+    position: fixed;
+    right: 116px;
+    top: 189px;
+    font-family: OpenSansHebrew;
+    font-size: 57px;
+    font-weight: 800;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.16;
+    letter-spacing: 0.7px;
+    color: #ffffff;
+    width: 1100px;
+    height: 66px;
+    overflow: hidden;
+    text-align: right;
+    animation: marquee 5s linear infinite;
+	display: block;
+}
+#movieTitle span {
+    visibility: hidden;
+}
+#moviePoster {
+    position: fixed;
+    left: 204px;
+    top: 138px;
+    width: 429px;
+    height: 588px;
+}
+.rating {
+	position: absolute;
+	width:215px;
+	height: 34px;
+	overflow: hidden;
+}
+.rating-image {
+	position: relative;
+	right:0;
+	width: 215px;
+}
+
+/** MOVIE INFO SCREEN **/
+
+#yearGenreRating {
+    position: fixed;
+    right: 117px;
+    top: 260px;
+    height: 49px;
+    width: 1160px;
+    font-family: OpenSansHebrew;
+    font-size: 36px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 0.5px;
+    text-align: right;
+    color: #cccccc;
+    overflow: hidden;
+    line-height: 45px;
+}
+#rating {
+	width:215px;
+	height: 35px;
+}
+.year-genre-rating-item {
+    line-height: 1;
+    margin-left: 14px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.ygr-formatted {
+	display: inline-block;
+	width: 0px;
+	height: 37px;
+	opacity: 0.4;
+	border: solid 2px #ffffff;
+}
+#directorLabel {
+    position: fixed;
+    right: 117px;
+    top: 330px;
+    height: 49px;
+    font-family: OpenSansHebrew;
+    font-size: 28px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 0.5px;
+    text-align: right;
+    color: #cccccc;
+}
+#directorName {
+    position: fixed;
+    right: 185px;
+    top: 330px;
+    height: 49px;
+    width: 888px;
+    font-family: OpenSansHebrew;
+    font-size: 28px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 0.5px;
+    text-align: right;
+    color: #cccccc;
+    overflow: hidden;
+    margin-right: 20px;
+}
+#overview {
+    position: fixed;
+    right: 118px;
+    top: 404px;
+    width: 969px;
+    height: 244px;
+    font-family: OpenSansHebrew;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.64;
+    text-align: right;
+    color: #ffffff;
+    overflow: hidden;
+    direction: rtl;
+}
+#overview span {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+#invisibleReadMore {
+    position: fixed;
+    bottom: 492px;
+    left: 833px;
+    width: 150px;
+    height: 40px;
+}
+.horizontal-button-container {
+    position: fixed;
+    height: 86px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+	right: 105px;
+	bottom:302px;
+}
+ul {   
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    padding: 6px 0;
+}
+li {
+    float: right;
+    height: 100px;
+    display: inline;
+}
+.capsule-button {
+    margin-left: 31px;
+    height: 66px;
+    opacity: 0.85;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 0.36);
+    font-family: OpenSansHebrew;
+    font-size: 28.9px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    line-height: 62px;
+    display: block;
+    overflow: hidden;
+}
+.capsule-button.focused {
+    background-color: #00c9ff;
+    box-shadow: 0 0 8px 4px rgba(0, 200, 255, 0.5);
+}
+.capsule-button p {
+    margin-left: 38px;
+    margin-right: 38px;
+    line-height: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+.capsule-button.focused p {
+    color: black;
+}
+.capsule-button2 {
+    margin-left: 31px;
+    height: 66px;
+    width: 300px;
+    opacity: 0.85;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 0);
+    font-family: OpenSansHebrew;
+    font-size: 28.9px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    line-height: 62px;
+    display: block;
+    overflow: hidden;
+    border: solid 2px #979797;
+	margin-top: 9px;
+}
+.capsule-button2.focused {
+    background-color: #00c9ff;
+    box-shadow: 0 0 8px 4px rgba(0, 200, 255, 0.5);
+    color: black;
+    border: none;
+}
+.capsule-button2 p {
+    line-height: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+.capsule-button2.focused p {
+    color: black;
+}
+#playButton {
+	margin-right:18px;
+	margin-top:0px;	
+}
+#playIcon {
+    position: relative;
+    right: 5px;
+    top: 4px;
+}
+#line {
+    position: fixed;
+    right: 94px;
+    bottom: 257px;
+    width: 1728px;
+    height: 3px;
+    opacity: 0.6;
+    background-color: #979797;
+}
+#castLabel {
+    position: fixed;
+    right: 118px;
+    bottom: 187px;
+    width: 137px;
+    height: 43px;
+    font-family: OpenSansHebrew;
+    font-size: 32px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    text-align: right;
+    color: #ffffff;
+    -webkit-text-stroke: 1px #979797;
+}
+/*caph-list of cast on movie info screen*/
+.cast-list-container {
+    position: fixed;
+    bottom: 76px;
+    width: 1920px;
+    height: 88px;
+    overflow: hidden;
+    border: 1px solid transparent;
+	/*z-index: 1;*/
+}
+.cast-list-item {
+    margin-left: 31px;
+    height: 66px;
+    width: 300px;
+}	
+#plot {
+    display: block;
+    /*top:*/ 
+    margin: auto;
+    width: 969px;
+    font-family: OpenSansHebrew;
+    font-size: 28px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.64;
+    text-align: right;
+    color: #ffffff;
+}
+
+.spinnerContainer{
+	position: fixed;
+	display: block;
+	width: 100px;
+	height: 100px;
+	right: 50%;
+	top: 45%;
+	
+}
+
+/** PLOT SCREEN **/
+
+#plot {
+	margin-left: auto;
+	margin-right: auto;
+	width: 969px;
+}
+#plotClose {
+	position: relative;
+	top:46px; 
+	width: 243px;
+	display:block; 
+	margin: auto;
+}
+
+/** RECOMMENDED MOVIES SCREEN **/
+
+/*caph-list of recomended movies on recomended movies screen*/
+#recommendedMoviesListContainer {
+    position: fixed;
+    top: 300px;
+}
+#recommendedMoviesHeader {
+    position: fixed;
+    width: 100%;
+    right: 100px;
+    top: 220px;
+    font-family: OpenSansHebrew;
+    font-size: 36px;
+    font-weight: 800;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.83;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+    display: block;
+    margin: auto;
+    text-align: right;
+}
+
+/** ACTOR SCREEN **/
+
+#actorScreen {
+	background-image: none;
+}
+#actorArea{
+	background-image: none;
+	height: 864px;
+	background-color: rgba(22, 22, 22, 0.5);
+	-webkit-box-shadow: 0px 0px 48px 51px rgba(22,22,22,0.5);
+}
+#actorName {
+    position: fixed;
+    left: 117px;
+    top: 129px;
+    width: 100%;
+    height: 66px;
+    font-family: OpenSansHebrew;
+    font-size: 57px;
+    font-weight: 800;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.16;
+    letter-spacing: 0.7px;
+    color: #ffffff;
+}
+#bioSection {
+    position: fixed;
+    left: 118px;
+    top: 250px;
+    width: 868px;
+    height: 530px;
+}
+#actorBio {
+    position: fixed;
+    left: 118px;
+    top: 0;
+    width: 868px;
+    max-height: 430px;
+    font-family: OpenSansHebrew;
+    font-size: 28px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.64;
+    text-align: left;
+    color: #ffffff;
+    overflow: hidden;
+	display: inline-block;
+	position: initial;
+}
+#actorMovies {
+	display: inline-block;
+	position: initial;
+	margin-top: 33px;
+	margin-left: 0;
+}
+#actorProfile {
+	position: fixed;
+	right: 186px;
+	top: 150px;
+	width:430px;
+	height: 632px;
+}
+
+/** BIOGRAPHY SCREEN **/
+
+#bio {
+    display: block;
+    top: 100px;
+    margin: auto;
+    font-family: OpenSansHebrew;
+    font-size: 28px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.64;
+    text-align: left;
+    color: #ffffff;
+    overflow: hidden;
+	max-height : 552px;
+	width: 969px;
+}
+#fullBioRightArrowContainer {
+    position: fixed;
+    bottom: 520px;
+    right: 250px;
+    width: 70px;
+    height: 110px;
+}
+#bioRightArrow {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+#fullBioLeftArrowContainer {
+    position: fixed;
+    bottom: 520px;
+    left: 250px;
+    width: 70px;
+    height: 110px;
+}
+#bioLeftArrow {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+#invisibleReadMore2 {
+    position: absolute;
+    bottom: 125px;
+    right: 0;
+    height: 33px;
+    width: 200px;
+}
+#actorProfileImage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#closeBio {
+	position: relative;
+	top:65px; 
+	width: 243px; 
+	display:block; 
+	margin: auto;
+}
+/** ACTOR MOVIES SCREEN **/
+
+#actorsMoviesHeader {
+    position: fixed;
+    width: 100%;
+    top: 220px;
+    font-family: OpenSansHebrew;
+    font-size: 36px;
+    font-weight: 800;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.83;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+#invisibleButton {
+    position: fixed;
+    bottom: 777px;
+    left: 230px;
+    width: 10px;
+    height: 20px;
+}
+#actorsMoviesListContainer {
+    position: fixed;
+    top: 300px;
+}
+
+
+/** SORT+FILTER SCREEN **/
+
+/*shadowed background*/
+.back {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(22, 22, 22, 0.5);
+}
+/*containers for buttons in list*/
+.main-vertical-container {
+    top: 265px;
+    right: 76px;
+}
+.additional-vertical-container {
+    position: absolute;
+    height: 100%;
+    right: 650px;
+}
+.genre {
+    top: 193px;
+    right: 676px;
+    padding-right: 11px;
+}
+ul.vertical-button-container {
+    position: fixed;
+    /*top: 323px;*/
+    
+    right: 100px;
+    height: 100%;
+    width: 518px;
+    list-style-type: none;
+    margin: 0;
+    padding: 15px;
+    overflow: hidden;
+}
+.rectangular-button {
+    font-family: OpenSansHebrew;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2;
+    text-align: right;
+    color: #ffffff;
+    display: block;
+}
+.rectangular-button p {
+    margin-left: 38px;
+    margin-right: 20px;
+    line-height: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+.wide-button {
+    width: 518px;
+    height: 76px;
+    font-size: 32px;
+    margin-top: 15px;
+}
+.wide-button.focused {
+    width: 518px;
+    height: 76px;
+    border-radius: 8px;
+    border: solid 3px #00C9FF;
+    box-shadow: 0 0 8px 4px rgba(0, 200, 255, 0.5);
+    font-family: OpenSansHebrew;
+    font-size: 32px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    text-align: right;
+    color: #00C9FF;
+}
+.narrow-button {
+    font-size: 28px;
+    margin-top: 10px;
+    height: 60px;
+    width: 100%;
+}
+.narrow-button.focused {
+    width: 518px;
+    height: 60px;
+    border-radius: 8px;
+    background-color: #38d3fc;
+    box-shadow: 0 0 8px 4px rgba(0, 200, 255, 0.5);
+    font-family: OpenSansHebrew;
+    font-size: 28px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    text-align: right;
+    color: #2f3744;
+}
+.title-box {
+    position: fixed;
+    top: 113.5px;
+    right: 128px;
+    width: 225px;
+    height: 66px;
+    font-family: OpenSansHebrew;
+    font-size: 57px;
+    font-weight: 800;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.16;
+    letter-spacing: 0.7px;
+    color: #ffffff;
+}
+.title-box p {
+    position: fixed;
+    top: 113.5px;
+    right: 128px;
+}
+.vertical-line {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    margin-left: 25px;
+    width: 3px;
+    height: 100%;
+    opacity: 0.6;
+    background-color: #979797;
+}
+#genreLine {
+    height: 705px;
+}
+#genreArrow {
+    margin-right: 250px;
+    margin-bottom: -5px;
+}
+
+/** SEARCH SCREEN **/
+
+.searchArea {
+	width: 100%;
+    height: 100%;
+}
+.text-box {
+    position: absolute;
+    top: 227px;
+    right: 631.6px;
+    width: 661.4px;
+    height: 75px;
+    border-radius: 39px;
+    background-color: #ffffff;
+    font-family: OpenSansHebrew;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 68px;
+    vertical-align: middle;
+}
+.text-box.focused {
+    box-shadow: 0 0 8px 4px rgba(0, 200, 255, 0.5);
+    font-style: normal;
+    color: #2f3744;
+}
+#searchImage {
+    position: absolute;
+    top: 246.1px;
+    right: 663.2px;
+}
+/*search button on the search screen*/
+.search-button {
+    position: absolute;
+    top: 400px;
+    right: 838px;
+    width: 243px;
+    height: 66px;
+    opacity: 0.85;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 0.36);
+    font-family: OpenSansHebrew;
+    font-size: 28.9px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    line-height: 62px;
+    vertical-align: middle;
+}
+.search-button.focused {
+    background-color: #38d3fc;
+    box-shadow: 0 0 8px 4px rgba(0, 200, 255, 0.5);
+    font-style: normal;
+    font-stretch: normal;
+    color: #2f3744;
+}
+
+/** SEARCH RESULTS SCREEN **/
+
+#searchResultsHeader {
+    position: fixed;
+    width: 100%;
+    top: 220px;
+    font-family: OpenSansHebrew;
+    font-size: 36px;
+    font-weight: 800;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.83;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+#searchResultsListContainer {
+    position: fixed;
+    top: 300px;
+}
+
+/** TRAILER SCREEN **/
+
+/*video placeholder*/
+.video-container {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+}
+#progressBarContainer{
+	position: fixed;
+	bottom: 140px;
+	width: 100%;
+	height: 10px;
+	background-color: rgba(0,0,0,0.4);
+}
+#playbackButtonsContainer {
+  	position: fixed;
+  	right: 835px;
+  	bottom: 27px;
+	width: 251px;
+	height: 85px;
+	border-radius: 50px;
+	-webkit-backdrop-filter: blur(40px);
+	backdrop-filter: blur(40px);
+/* 	background-color: rgba(22, 22, 22, 0.4); */
+	background-color: rgba(0,0,0,0.4);
+
+}
+#play-container {
+	position: relative;
+	width: 60px;
+	height: 90px;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+/*     background-color: pink; */
+}
+#ff-container {
+	position: absolute;
+	width: 60px;
+	height: 90px;
+	top: 50%;
+    right: 16px;
+    transform: translate(0, -50%);
+/*     background-color: orange; */
+}
+#bb-container {
+	position: absolute;
+	width: 60px;
+	height: 90px;
+	top: 50%;
+    left: 16px;
+    transform: translate(0, -50%);
+/*     background-color: lightgreen; */
+}
+/** ERROR SCREEN **/
+
+.error-box {
+    position: absolute;
+    top: 427px;
+    right: 631.6px;
+    width: 740px;
+    border-radius: 10px;
+    background-color: #38d3fc;
+    color: #2f3744;
+    box-shadow: 0 0 15px 6px rgba(0, 200, 255, 0.5), inset 0 0 15px 6px rgba(0, 200, 255, 0.5);
+}
+#errorImage {
+    position: fixed;
+    top: 438px;
+    right: 639px;
+}
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

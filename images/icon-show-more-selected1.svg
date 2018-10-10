@@ -1,0 +1,18 @@
+<svg width="14" height="21" xmlns="http://www.w3.org/2000/svg">
+ <!-- Generator: sketchtool 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+ <title>B3756B0D-4495-4EC9-A20B-39A973965821</title>
+ <desc>Created with sketchtool.</desc>
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="23" width="16" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g fill-rule="evenodd" fill="none" id="Smart-TV-UI">
+   <g fill="#00C9FF" id="00---Main-Screen---Default">
+    <polygon transform="rotate(90, 6.98502, 10.5376)" points="15.387446403503418,3.62930879105528 17.326464653015137,5.810891761444054 6.985082149505615,17.445926431851603 -3.356424331665039,5.810822876433974 -1.4174072742462158,3.6292529123058443 6.985082149505615,13.08276819848777 " id="Icon_dropdown"/>
+   </g>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,494 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Movie App</title>
+
+	<meta name="viewport" content="width=1920, user-scalable=no">
+
+	<!-- include style sheet -->
+ 	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	
+    <!-- include CAPH 3.1.0 default package -->
+    <link type="text/stylesheet" href="lib/caph/3.1.0/caph.min.css" rel="stylesheet" />
+	
+    <!-- include jQuery file (you can use AngularJS & jQuery in your environment) -->
+    <script type="text/javascript" src="lib/caph/3.1.0/bower_components/jquery/dist/jquery.js" ></script>
+    <script type="text/javascript" src="lib/caph/3.1.0/bower_components/angular/angular.min.js"></script>
+	
+	<!-- include the CAPH Package for AngularJS -->
+    <script src="lib/caph/3.1.0/caph-angular.min.js"></script>
+	
+	 <!-- include Angular-ellipsis for "show more" option -->
+	 <script type="text/javascript" src="lib/caph/3.1.0/bower_components/angular-ellipsisjs/angular-ellipsis.js"></script>
+
+  	<!-- Include YT library and this directive -->
+	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+	<script type="text/javascript" src="lib/caph/3.1.0/bower_components/angular-youtube-embed/angular-youtube-embed.js"></script>
+	
+    <!-- include app and controller -->
+    <script type="text/javascript" src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/controller.js"></script>
+	
+	<!-- for enabling/disabling the screen-saver -->
+	<!-- <script type="text/javascript" src="$WEBAPIS/webapis/webapis.js"></script>-->
+	
+	<!-- angular material -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.css">
+
+	<!-- ngProgress for progress bar of trailer -->
+	<script src="lib/caph/3.1.0/bower_components/ngProgress/ngprogress.js"></script>
+	<!-- <link rel="stylesheet" href="lib/caph/3.1.0/bower_components/ngProgress/ngProgress.css"> -->
+</head>
+
+<body ng-controller="myController">
+  
+	<!-- INDEX SCREEN -->
+	<div id="mainScreen" class="screen" ng-show="!showIntro" ng-hide="currentDepth === DEPTH.MOVIE_INFO" >
+		<div id="introContainer"  ng-show="showIntro">
+			<img id="intro" ng-src="images/Intro.png"/>
+		</div>
+		<div id="logoContainer" ng-show="currentDepth === DEPTH.INDEX && !showIntro" >
+			<img id="logo" ng-src="images/l-o-g-o.png"/>
+		</div>
+		<div id="searchCircle" ng-show="currentDepth === DEPTH.INDEX && !showIntro" focusable="{depth: DEPTH.INDEX, name: 'searchCircle', initialFocus: true}" on-selected="launchSearchScreen()">
+			<img id="searchIcon" ng-src="{{searchIcon}}" />
+		</div>
+
+		<div id="sort" class="dropdown" ng-show="currentDepth === DEPTH.INDEX && !showIntro" focusable="{depth: DEPTH.INDEX, name: 'sortBy'}"  on-focused="focusSort()" on-blurred="blurSort()" on-selected="launchSortScreen()">
+			<div id = "sort-dropdown-text" class="dropdown-text">{{sortValue}}</div>
+			<img id="sortArrow" class="dropdown-arrow" ng-src="{{sortArrowIcon}}" alt="" />
+		</div>
+
+		<div id="filter" class="dropdown" ng-show="currentDepth === DEPTH.INDEX && !showIntro" focusable="{depth: DEPTH.INDEX, name: 'filterBy'}" on-focused="focusFilter()" on-blurred="blurFilter()" on-selected="launchFilterScreen()">
+			<div class="dropdown-text">{{filterValue}}</div>
+			<img class="dropdown-arrow" ng-src="{{filterArrowIcon}}" alt="" />
+		</div>
+		
+		<div id="movieListContainer" ng-show="currentDepth === DEPTH.INDEX && !showIntro">
+			<caph-list on-scroll-finish="getNextPage()" id="movieList" container-class="movie-list" items="item in movies">
+				<div class="movie-list-item">
+					<div class="movie-poster" focusable="{depth: DEPTH.INDEX}" on-selected="launchMovieScreen(item.id)">
+						<div style="width: 100%; height: 100%; background: url({{item.image || ''}}); background-size: 100% 100%;  background-repeat: no-repeat;"></div>
+					</div>
+					<div class="movie-title">{{item.text}}</div>
+					<div class="movie-year">{{item.year}}</div>
+				</div>
+			</caph-list>
+		</div>
+		<!-- <div class="spinnerContainer" ng-show="showSpinner && (currentDepth == DEPTH.INDEX)"> -->
+		<div class="spinnerContainer" ng-show="showSpinner">
+			<img id="indexLoadingMovieScreen" ng-src="images/spin3.svg"  />
+		</div>
+	</div>
+
+	<!-- MOVIE INFO SCREEN -->
+	<div id="movieScreen" class="screen" ng-show="currentDepth === DEPTH.MOVIE_INFO|| currentDepth === DEPTH.PLOT_SCREEN || currentDepth === DEPTH.RECOMMENDED_MOVIES || currentDepth === DEPTH.ACTOR_INFO || currentDepth === DEPTH.ACTOR_BIO || currentDepth === DEPTH.ACTOR_MOVIES">
+		
+		<div class="filtered-background" style="background-image:url({{currentMovieInfo.backdrop_path || ''}});">
+			<div class="back"></div>
+		</div>
+		
+		<div id="movieForeground">
+			<div id="movieTitle">{{currentMovieInfo.title}}<span>׳</span></div>
+			<img id="moviePoster" class="movie-screen-item" ng-src="{{currentMovieInfo.poster_path}}" />
+			<div class="back-container">
+				<img id="backFromMovieScreen" class="button" ng-src="{{backIcon}}" focusable="{depth: DEPTH.MOVIE_INFO, name: 'backFromMovieScreen'}" on-focused="focusBack()" on-blurred="blurBack()" on-selected="launchIndex()" />
+			</div>
+			
+			<div class="home-container close-to-right">
+				<img class="button" ng-src="{{homeIcon}}" focusable="{depth: DEPTH.MOVIE_INFO, name: 'homeFromMovieScreen'}" on-focused="focusHome()" on-blurred="blurHome()" on-selected="launchIndex()" />
+			</div>
+
+			<div id="yearGenreRating">
+				<div id="rating" class="year-genre-rating-item">
+					<div id="ratingDark" class="rating">
+						<img class="rating-image" ng-src="{{ratingIconDark}}" />
+					</div>
+					<div id="ratingLight" class="rating">
+						<img class="rating-image" ng-src="{{ratingIconLight}}" />
+					</div>
+				</div>
+				<div class="year-genre-rating-item ygr-formatted"></div>
+				<span class="year-genre-rating-item">{{currentMovieInfo.genres[0].name}}</span>
+				<div class="year-genre-rating-item ygr-formatted"></div>
+				<span class="year-genre-rating-item">{{year}}</span>
+			</div>
+			<span id="directorLabel" ng-onload="foo()"> :במאי</span>
+			<div id="directorName" data-ng-bind="directorsName.join(', ')" data-ellipsis data-ellipsis-symbol="  ... "></div>
+			<span id="overview" data-ng-bind="currentMovieInfo.overview" data-ellipsis data-ellipsis-append=" קרא עוד " data-ellipsis-symbol="  ... " > אאא </span>
+			<!--<div id="overview"  data-ng-bind="overview" data-ellipsis data-ellipsis-append=" קרא עוד " data-ellipsis-symbol="  ... " >  </div> -->
+			<div id="invisibleReadMore" focusable="{depth: DEPTH.MOVIE_INFO, name: 'readMore'}" on-focused="focusReadMore()" on-selected="selectReadMore()" on-blurred="blurReadMore()"></div>
+
+			<ul class="horizontal-button-container">
+				<li id="playTrailer" class="capsule-button " focusable="{depth: DEPTH.MOVIE_INFO, name: 'playTrailer'}" on-selected="launchTrailerScreen()" on-focused="playIcon = 'images/play-selected.svg'" on-blurred="playIcon = 'images/play-regular.svg'">
+					<p id="playButton">נגן טריילר</p>
+					<img id="playIcon" ng-src="{{playIcon}}" />
+				</li>
+				<li class="capsule-button" focusable="{depth: DEPTH.MOVIE_INFO, name: 'reviews'}" on-selected="selectRecommendedMovies()">
+					<p>סרטים דומים</p>
+				</li>
+				<!--<li class="capsule-button" focusable="{depth: DEPTH.MOVIE_INFO, name: 'screeningHours'}">
+					<p>שעות הקרנה</p>
+				</li>-->
+			</ul>
+		</div>
+
+		<div id="castArea">
+			<div id="line"> </div>
+			<div id="castLabel">:משתתפים</div>
+			<caph-list id="castList" container-class="cast-list-container" items="item in castList">			
+				<div class="capsule-button2" focusable="{depth: DEPTH.MOVIE_INFO}" on-focused="updateCastListArrow($index)" on-selected="launchActorScreen($index)">
+					{{item.name}}
+				</div>
+			</caph-list>
+		</div>
+		
+		<div id="plotScreen" class="screen transparent-screen" ng-show="currentDepth === DEPTH.PLOT_SCREEN">
+			<div id="plotTable" class="table">
+				<p id="plot">
+					{{currentMovieInfo.overview}}
+					<span id="plotOverview" class="hidden">׳</span>
+				</p>
+				<div id="plotClose" class="capsule-button" focusable="{depth: DEPTH.PLOT_SCREEN}" on-selected="backToMovieScreen()">
+					<p>סגור</p>
+				</div>
+			</div>
+		</div>
+
+		<div id="recommendedMoviesScreen" class="screen transparent-screen" ng-show="currentDepth === DEPTH.RECOMMENDED_MOVIES">
+			<div class="back-container">
+				<img ng-src="{{backIcon}}" class="button" focusable="{depth: DEPTH.RECOMMENDED_MOVIES, name: 'exitRecommendedMovies'}" on-focused="focusBack()" on-blurred="blurBack()" on-selected="exitRecommendedMovies()" />
+			</div>
+			
+			<div id="recommendedMoviesHeader">{{currentMovieInfo.title}}: סרטים דומים</div>
+			<div id="invisibleButton" focusable="{depth: DEPTH.RECOMMENDED_MOVIES, name: 'invisibleButton'}" on-blurred="blurInvisibleButton()"></div>
+			<div id="recommendedMoviesListContainer">
+				<caph-list id="recommendedMoviesList" container-class="movies-list-container" items="item in recommendedMovies">
+					<div class="movie-list-item">
+						<div id="recommendedMoviePoster" class="movie-poster" focusable="{depth: DEPTH.RECOMMENDED_MOVIES}" on-selected="launchMovieScreenFromRecommendedMovies(item.id)">
+							<div style="width:100%; height:100%; background: url({{item.image || ''}}); background-size:100% 100%;  background-repeat: no-repeat;"></div>
+						</div>
+						<div class="movie-title">{{item.text}}</div>
+						<div class="movie-year">{{item.year}}</div>
+					</div>
+				</caph-list>
+			</div>
+		</div>
+
+	</div>						
+
+	<!-- ACTOR SCREEN -->
+	<div id="actorScreen" class="screen" ng-show="currentDepth === DEPTH.ACTOR_INFO || currentDepth === DEPTH.ACTOR_BIO || currentDepth === DEPTH.ACTOR_MOVIES">
+
+		<div id="actorArea" class="screen">
+			<div class="back-container">
+				<img ng-src="{{backFromActorIcon}}" class="button" focusable="{depth: DEPTH.MOVIE_INFO, name: 'backFromActorScreen'}" on-focused="backFromActorIcon = 'images/icon-back-hover.svg'" on-blurred="backFromActorIcon = 'images/icon-back-reg.svg'" on-selected="backToMovieScreen()" />
+			</div>
+			
+			<div class="home-container">
+				<img ng-src="{{homeFromActorIcon}}" class="button" focusable="{depth: DEPTH.MOVIE_INFO, name: 'homeFromActorScreen'}" on-focused="homeFromActorIcon = 'images/home-button-selected.svg'" on-blurred="homeFromActorIcon = 'images/home-button-reg.svg'" on-selected="homeFromActorScreen()" />
+			</div>
+
+			<div id="actorName">{{actor.name}}</div>
+			<div id="bioSection">
+				<div id="actorBio" data-ng-bind="actorInfo.biography" data-ellipsis data-ellipsis-append="  read more" data-ellipsis-symbol="  ...  "></div>
+				<div id="invisibleReadMore2" focusable="{depth: DEPTH.MOVIE_INFO, name: 'invisibleReadMore2'}" on-focused="focusReadMore2()" on-blurred="blurReadMore2()" on-selected="selectReadMoreActorBio()"></div>
+				<div id="actorMovies" class="capsule-button" focusable="{depth: DEPTH.MOVIE_INFO, name: 'focus2'}" on-selected="launchActorsMoviesScreen()">
+					<p> {{actor.name}}'s movies</p>
+				</div>
+			</div>
+
+			<div id="actorProfile">
+				<img id="actorProfileImage" ng-src="{{actorInfo.currentImage}}" />
+			</div>
+		</div>
+	</div>
+
+	<!-- BIOGRAPHY SCREEN -->
+	<div id="fullBio" class="screen no-image-back" ng-show="currentDepth === DEPTH.ACTOR_BIO">
+
+		<div class="table">
+			<div id="bio" data-ng-bind="bioPage" data-ellipsis data-ellipsis-append=" " data-ellipsis-symbol=" "></div>
+			<div id="fullBioRightArrowContainer">
+				<img id="bioRightArrow" focusable="{depth: DEPTH.MOVIE_INFO, name: 'bioRightArrow'}" ng-src="{{fullBioRightArrow}}" on-selected="nextPage()" on-focused="focusFullBioRightArrow()" on-blurred="blurFullBioRightArrow()" />
+			</div>
+			<div id="fullBioLeftArrowContainer">
+				<img id="bioLeftArrow" focusable="{depth: DEPTH.MOVIE_INFO, name: 'bioLeftArrow'}" ng-src="{{fullBioLeftArrow}}" on-selected="prevPage()" on-focused="focusFullBioLeftArrow()" on-blurred="blurFullBioLeftArrow()" />
+			</div>
+
+			<div id="closeBio" class="capsule-button" focusable="{depth: DEPTH.MOVIE_INFO, name: 'backFromBioButton'}" on-selected="backToActorScreen()">
+				<p>סגור</p>
+			</div>
+		</div>
+	</div>
+			
+	<!-- MOVIES of CURRENT ACTOR SCREEN -->
+	<div id="allMoviesByActor" class="screen no-image-back" ng-show="currentDepth === DEPTH.ACTOR_MOVIES">
+
+		<div class="back-container">
+			<img ng-src="{{backIcon}}" class="button" focusable="{depth: DEPTH.MOVIE_INFO, name: 'backFromActorsMovieScreen'}" on-focused="focusBack()" on-blurred="blurBack()" on-selected="backFromActorsMovies()" />
+		</div>
+		
+		<div class="home-container">
+			<img ng-src="{{homeIcon}}" class="button" focusable="{depth: DEPTH.MOVIE_INFO, name: 'homeFromActorsMovieScreen'}" on-focused="focusHome()" on-blurred="blurHome()" on-selected="homeFromActorsMovies()" />
+		</div>
+		
+		<div id="actorsMoviesHeader">{{actorInfo.name}}'s movies</div>
+		<div id="invisibleButton" focusable="{depth: DEPTH.MOVIE_INFO, name: 'invisibleButton'}" on-blurred="blurInvisibleButton()"></div>
+		
+		<div id="actorsMoviesListContainer">
+			<caph-list id="actorsMoviesList" on-scroll-finish="getNextPage2()" container-class="movies-list-container" items="item in actorsMovies">
+				<div class="movie-list-item">
+					<div id="actorMoviePoster" class="movie-poster" focusable="{depth: DEPTH.MOVIE_INFO}" on-selected="launchMovieScreenFromActorsMovies(item.id)">
+						<div style="width:100%; height:100%; background: url({{item.image || ''}}); background-size:100% 100%;  background-repeat: no-repeat;">
+						</div>
+					</div>
+					<div class="movie-title">{{item.text}}</div>
+					<div class="movie-year">{{item.year}}</div>
+				</div>
+			</caph-list>
+		</div>
+	</div>
+			
+	<!-- TRAILER SCREEN -->
+	<!-- <div id="trailerScreen" class="screen" ng-show=" isTrailerPlaying && currentDepth === DEPTH.TRAILER"> -->
+	<div id="trailerScreen" class="screen" ng-show="currentDepth === DEPTH.TRAILER">
+
+		<div class="filtered-background">
+			<div class="back"></div>
+		</div>
+
+		<div class="back-container" focusable="{depth: DEPTH.TRAILER, name: 'backFromTrailerScreen'}" on-focused="focusBack()" on-blurred="blurBack()" on-selected="backFromTrailerScreen()" >
+			<img id="backFromTrailerScreen" class="button" ng-show="showControls" ng-src="{{backIcon}}" />
+		</div>
+
+		<!-- <div class="home-container">
+			<img id="homeFromTrailerScreen" class="button" ng-src="{{homeIcon}}" focusable="{depth: DEPTH.TRAILER, name: 'homeFromTrailerScreen'}" on-focused="focusHome()" on-blurred="blurHome()" on-selected="launchIndex()" />
+		</div> -->
+
+		<!-- VIDEO PLAYER AREA -->
+		<div id="trailerArea">
+			<div class="video-container">
+				<!-- Use 'youtube-video' as an element or attribute. -->
+				<youtube-video video-id="trailerID" player="trailerPlayer" player-vars="PLAYER" player-width="'1920px'" player-height="'1080px'"></youtube-video>
+				<!-- <div id="playbackButtonsProgress" ng-show="showControls"> -->
+				<div id="playbackButtonsProgress" >
+					<div id="playbackButtonsContainer">
+						<div id="play-container" focusable="{depth: DEPTH.TRAILER, name: 'playPauseButton'}" on-selected="selectPlayPauseButton()" on-focused="focusPlayPauseButton()" on-blurred="blurPlayPauseButton()">
+							<img id="trailerPlayPauseButton" class="button" ng-src="{{playPauseButton}}" ng-show="showControls"/>
+						</div>
+						<div id="ff-container" focusable="{depth: DEPTH.TRAILER, name: 'ffButton'}" on-selected="selectFfButton()" on-focused="focusFfButton()" on-blurred="blurFfButton()">
+							<img id="trailerFfButton" class="button" ng-src="{{ffButton}}" ng-show="showControls" />		  
+						</div>
+						<div id="bb-container" focusable="{depth: DEPTH.TRAILER, name: 'bbButton'}" on-selected="selectBbButton()" on-focused="focusBbButton()" on-blurred="blurBbButton()">
+							<img id="trailerBbButton" class="button" ng-src="{{bbButton}}" ng-show="showControls"/>
+						</div>
+					</div>
+					<div id="progressBarContainer" ng-show="isTrailerPlaying && showControls""></div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+				
+	<!-- SORT SCREEN -->
+	<div id="sortScreen" class="screen transparent-screen" ng-show="currentDepth === DEPTH.SORT">
+		<!--<div class="filtered-background">
+            <div class="back">
+            </div>
+        </div> -->
+		<div class="home-container close-to-right">
+			<img id="homeFromSortScreen" class="button" ng-src="{{homeIcon}}" focusable="{depth: DEPTH.SORT, name: 'homeFromSortScreen', initialFocus: true}" on-focused="focusHome()" on-blurred="blurHome()" on-selected="launchIndex()" />
+		</div>
+
+		<div class="title-box">
+			<p id="sortTitle">מיון לפי</p>
+		</div>
+
+		<ul id="sortContainer" class="vertical-button-container main-vertical-container">
+
+			<!-- <li class="rectangular-button wide-button" focusable="{depth: DEPTH.SORT}" on-selected="sortBy(1)">
+				<p class="non-transparent">תאריך בסדר עולה</p>
+			</li>
+			<li class="rectangular-button wide-button" focusable="{depth: DEPTH.SORT}" on-selected="sortBy(2)">
+				<p class="non-transparent">תאריך בסדר יורד</p>
+			</li>-->
+			<li class="rectangular-button wide-button" focusable="{depth: DEPTH.SORT}" on-selected="sortBy(2)">
+				<p class="non-transparent">סרטים חדשים</p>
+			</li>
+			<!-- <li class="rectangular-button wide-button" focusable="{depth: DEPTH.SORT}" on-selected="sortBy(3)">
+				<p class="non-transparent">פופולריות בסדר עולה</p>
+			</li>
+			<li class="rectangular-button wide-button" focusable="{depth: DEPTH.SORT}" on-selected="sortBy(4)">
+				<p class="non-transparent">פופולריות בסדר יורד</p>
+			</li> -->
+			<li class="rectangular-button wide-button" focusable="{depth: DEPTH.SORT}" on-selected="sortBy(4)">
+				<p class="non-transparent">הנצפים ביותר</p>
+			</li>
+			<!-- <li class="rectangular-button wide-button" focusable="{depth: DEPTH.SORT}" on-selected="sortBy(5)">
+				<p class="non-transparent">דירוג בסדר עולה</p>
+			</li>
+			<li class="rectangular-button wide-button" focusable="{depth: DEPTH.SORT}" on-selected="sortBy(6)">
+				<p class="non-transparent">דירוג בסדר יורד</p>
+			</li> -->
+			<li class="rectangular-button wide-button" focusable="{depth: DEPTH.SORT}" on-selected="sortBy(6)">
+				<p class="non-transparent">דירוג הצופים</p>
+			</li>
+			<!-- <li class="rectangular-button wide-button" focusable="{depth: DEPTH.SORT}" on-selected="sortBy(7)">
+				<p class="non-transparent">כותרת בסדר עולה</p>
+			</li>
+			<li class="rectangular-button wide-button" focusable="{depth: DEPTH.SORT}" on-selected="sortBy(8)">
+				<p class="non-transparent">כותרת בסדר יורד</p>
+			</li> -->
+		</ul>
+	</div> 
+
+	<!-- FILTER SCREEN -->
+    <div id="filterScreen" class="screen transparent-screen" ng-show="currentDepth === DEPTH.FILTER">
+        
+		<!--<div class="filtered-background">
+            <div class="back">
+            </div>
+        </div> -->
+
+        <div class="home-container close-to-right">
+            <img ng-src="{{homeIcon}}" class="button" id="homeFromFilterScreen" focusable="{depth: DEPTH.FILTER, name: 'homeFromFilterScreen', initialFocus: true}" on-focused="focusHome()" on-blurred="blurHome()" on-selected="launchIndex()" />
+        </div>
+
+        <div class="title-box">
+            <p id="filterTitle">סינון לפי</p>
+        </div>
+
+        <ul id="filterContainer" class="vertical-button-container main-vertical-container">
+
+            <li class="rectangular-button wide-button" focusable="{depth: DEPTH.FILTER}" on-focused="closeFloatingMenu()" on-selected="filterBy(1)">
+                <p>סרטים חדשים</p>
+            </li>
+            <li class="rectangular-button wide-button" focusable="{depth: DEPTH.FILTER}" on-focused="closeFloatingMenu()" on-selected="filterBy(2)">
+                <p>הנצפים ביותר</p>
+            </li>
+            <li class="rectangular-button wide-button" focusable="{depth: DEPTH.FILTER}" on-focused="onGenreFocused()" on-blurred="blurShowMore()">
+                <img id="genreArrow" class="show-more-arrow" ng-src="{{showMoreIcon}}" alt="" />
+                <p>לפי ז'אנר</p>
+            </li>
+            <!-- <li class="rectangular-button wide-button" focusable="{depth: DEPTH.FILTER}" on-focused="closeFloatingMenu()" on-selected="filterBy(13)">
+                <p>בקרוב בבתי הקולנוע</p>
+            </li> -->
+            <li class="rectangular-button wide-button" focusable="{depth: DEPTH.FILTER}" on-focused="closeFloatingMenu()" on-selected="filterBy(14)">
+                <p>כל הסרטים</p>
+            </li>
+        </ul>
+
+        <ul id="genreContainer" class="additional-vertical-container genre" ng-show="isGenreFocused">
+            <li>
+				<div id="genreLine" class="vertical-line"></div>
+            </li>
+            <li class="rectangular-button narrow-button" focusable="{depth: DEPTH.FILTER}" on-selected="filterBy(3)">
+                <p>דרמה</p>
+            </li>
+            <li class="rectangular-button narrow-button" focusable="{depth: DEPTH.FILTER}" on-selected="filterBy(4)">
+                <p>קומדיה</p>
+            </li>
+            <li class="rectangular-button narrow-button" focusable="{depth: DEPTH.FILTER}" on-selected="filterBy(5)">
+                <p>מתח / פעולה</p>
+            </li>
+            <li class="rectangular-button narrow-button" focusable="{depth: DEPTH.FILTER}" on-selected="filterBy(6)">
+                <p>ילדים</p>
+            </li>
+            <li class="rectangular-button narrow-button" focusable="{depth: DEPTH.FILTER}" on-selected="filterBy(7)">
+                <p>אימה</p>
+            </li>
+            <li class="rectangular-button narrow-button" focusable="{depth: DEPTH.FILTER}" on-selected="filterBy(8)">
+                <p>אנימציה</p>
+            </li>
+            <li class="rectangular-button narrow-button" focusable="{depth: DEPTH.FILTER}" on-selected="filterBy(9)">
+                <p>דוקומנטרי</p>
+            </li>
+            <li class="rectangular-button narrow-button" focusable="{depth: DEPTH.FILTER}" on-selected="filterBy(10)">
+                <p>הרפתקה</p>
+            </li>
+            <li class="rectangular-button narrow-button" focusable="{depth: DEPTH.FILTER}" on-selected="filterBy(11)">
+                <p>מדע בדיוני</p>
+            </li>
+            <li class="rectangular-button narrow-button" focusable="{depth: DEPTH.FILTER}" on-selected="filterBy(12)">
+                <p>פשע</p>
+            </li>
+        </ul>
+    </div>
+	
+	<!-- SEARCH SCREEN -->
+    <div id="searchScreen" class="screen" ng-show="currentDepth === DEPTH.SEARCH">
+        
+		<div class="filtered-background">
+            <div class="back">
+            </div>
+        </div>
+					
+		<div class="home-container close-to-right">
+			<img ng-src="{{homeIcon}}" class="button" id="homeFromSearchScreen" focusable="{depth: DEPTH.SEARCH, name: 'homeFromSearchScreen', initialFocus: true}" on-focused="focusHome()" on-blurred="blurHome()" on-selected="launchIndex()" />
+		</div>
+					
+        <div id="searchArea">
+            <form>
+                <input type="text" id="tizenIme" class="text-box" ng-model="search.string" focusable="{depth: DEPTH.SEARCH}" on-focused="onSearchFocused()" on-selected="showIME()">
+                <img id="searchImage" src="images/icon-search-big.PNG" />
+                <div class="search-button" focusable="{depth: DEPTH.SEARCH}" on-selected="showSearchResults(search.string)">חיפוש</div>
+            </form>
+        </div>
+    </div>
+	
+	<!-- SEARCH RESULTS SCREEN -->
+	<div id="searchResultsScreen" class="screen " ng-show="currentDepth === DEPTH.SEARCH_RESULTS">
+
+		<div class="back-container">
+			<img ng-src="{{backIcon}}" class="button" focusable="{depth: DEPTH.SEARCH_RESULTS, name: 'backFromSearchResultsScreen', initialFocus: true}" on-focused="focusBack()" on-blurred="blurBack()" on-selected="clearSearchList(); launchSearchScreen()" />
+		</div>
+		
+		<div class="home-container">
+			<img ng-src="{{homeIcon}}" class="button" focusable="{depth: DEPTH.SEARCH_RESULTS, name: 'homeFromSearchResultsScreen'}" on-focused="focusHome()" on-blurred="blurHome()" on-selected="clearSearchList(); launchIndex()" />
+		</div>
+		
+		<div id="searchResultsHeader">{{search.string}}: תוצאות</div>
+		
+		<div id="searchResultsListContainer">
+			<caph-list id="searchResultsList" on-scroll-finish="getNextPageOfSearchResults()" container-class="movies-list-container" items="item in searchResults">
+				<div class="movie-list-item">
+					<div id="searchResultsPoster" class="movie-poster" focusable="{depth: DEPTH.SEARCH_RESULTS}" on-selected="clearSearchList(); launchMovieScreen(item.id)">
+						<div style="width:100%; height:100%; background: url({{item.image || ''}}); background-size:100% 100%;  background-repeat: no-repeat;"></div>
+					</div>
+					<div class="movie-title">{{item.text}}</div>
+					<div class="movie-year">{{item.year}}</div>
+				</div>
+			</caph-list>
+		</div>
+	</div>
+	
+	<!-- ERROR SCREEN -->
+	<div id="trailerScreen" class="screen" ng-show="currentDepth === DEPTH.ERROR">
+        
+		<div class="filtered-background">
+            <div class="back">
+            </div>
+		</div>
+					
+        <div class="back-container">
+            <img id="backFromErrorScreen" class="button" ng-src="{{backIcon}}" focusable="{depth: DEPTH.ERROR, name: 'backFromErrorScreen', initialFocus: true}" on-focused="focusBack()" on-blurred="blurBack()" on-selected="backFromErrorScreen()" />
+        </div>
+					
+		<!--<div class="home-container">
+			<img id="homeFromErrorScreen" class="button" ng-src="{{homeIcon}}" focusable="{depth: DEPTH.ERROR, name: 'homeFromErrorScreen'}" on-focused="focusHome()" on-blurred="blurHome()" on-selected="launchIndex()" />
+		</div> -->	
+
+		<div id="errorMessageArea">
+            <div class="text-box error-box">
+				{{errorMessage}}
+				<!-- <img id="errorImage" ng-src={{errorImage}} />-->
+			</div>
+        </div>
+    </div>
+	
+</body>
+</html>

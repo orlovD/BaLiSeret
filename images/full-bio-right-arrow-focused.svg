@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="58px" height="96px" viewBox="0 0 58 96" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 40.1 (33804) - http://www.bohemiancoding.com/sketch -->
+    <title>DCA2101A-A7DB-437E-B308-67D5C4145379</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M529.004573,836.947406 L501.666573,804.152406 C500.535573,802.793406 498.512573,802.609406 497.154573,803.744406 C495.793573,804.881406 495.609573,806.896406 496.742573,808.256406 L522.371573,839.000406 L496.742573,869.742406 C495.611573,871.105406 495.795573,873.121406 497.154573,874.256406 C498.511573,875.391406 500.535573,875.207406 501.666573,873.848406 L529.004573,841.055406 C529.502573,840.459406 529.750573,839.729406 529.750573,839.000406 C529.750573,838.270406 529.502573,837.541406 529.004573,836.947406" id="path-1"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="2" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0.788235294   0 0 0 0 1  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Smart-TV-UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="button_states" transform="translate(-484.000000, -791.000000)">
+            <g id="info_back_arrow_selected">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#00C9FF" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>
