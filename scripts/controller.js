@@ -222,9 +222,9 @@ myApp.controller('myController', function($scope, $http, focusController, $timeo
     $scope.getNextPage = function() {
         console.log("in getNextPage()");
         //check sortingCriteria and filteringCriteria and send appropriate request
-        var request = "http://api.themoviedb.org/3/discover/movie?sort_by=" + $scope.sortingCriteria + "&api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39" + $scope.filteringGenre + "&language=he-IL"+ $scope.voteCount +"&page=";
+        var request = "https://api.themoviedb.org/3/discover/movie?sort_by=" + $scope.sortingCriteria + "&api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39" + $scope.filteringGenre + "&language=he-IL"+ $scope.voteCount +"&page=";
         if ($scope.filteringCriteria !== "") {
-            request = "http://api.themoviedb.org/3/movie" + $scope.filteringCriteria + "?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&sort_by=" + $scope.sortingCriteria + $scope.voteCount +"&language=he-IL&page=";
+            request = "https://api.themoviedb.org/3/movie" + $scope.filteringCriteria + "?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&sort_by=" + $scope.sortingCriteria + $scope.voteCount +"&language=he-IL&page=";
         }
         if ($scope.lastRetrievedPage < $scope.totalPages) {
             $http.get(request + (1 + $scope.lastRetrievedPage)).then(function(response2) {
