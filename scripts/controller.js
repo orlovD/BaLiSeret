@@ -1170,7 +1170,7 @@ myApp.controller('myController', function($scope, $http, focusController, $timeo
         }
         console.log("in getTrailerURL");
         //request for youtube trailer id
-        var request = "http://api.themoviedb.org/3/movie/" + $scope.currentMovieID + "/videos?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39";
+        var request = "https://api.themoviedb.org/3/movie/" + $scope.currentMovieID + "/videos?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39";
         $http.get(request).then(function(response) {
             //check if any trailer exists
             if (response.data.results[0] === undefined) {
