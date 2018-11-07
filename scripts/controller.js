@@ -199,7 +199,7 @@ myApp.controller('myController', function($scope, $http, focusController, $timeo
             var releaseDate = new Date(response.data.results[i].release_date);
             var year = releaseDate.getFullYear();
             //error check - check if image exists
-            var imgURL = "http://wonkville.net/wp-content/uploads/2016/04/No-image-available.jpg";
+            var imgURL = "https://wonkville.net/wp-content/uploads/2016/04/No-image-available.jpg";
             if (response.data.results[i].poster_path !== null) {
                 imgURL = "https://image.tmdb.org/t/p/w342" + response.data.results[i].poster_path;
             }
@@ -754,7 +754,7 @@ myApp.controller('myController', function($scope, $http, focusController, $timeo
                         $scope.actorInfo.currentImage = null;
                         document.getElementById("actorProfile").style.display = "none";
                     } else {
-                        $scope.actorInfo.currentImage = "http://image.tmdb.org/t/p/h632" + response2.data.profiles[0].file_path ;
+                        $scope.actorInfo.currentImage = "https://image.tmdb.org/t/p/h632" + response2.data.profiles[0].file_path ;
                         document.getElementById("actorProfile").style.display = "initial";
                     }
                     console.log("currentImage: " + $scope.actorInfo.currentImage);
