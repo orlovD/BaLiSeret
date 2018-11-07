@@ -190,7 +190,7 @@ myApp.controller('myController', function($scope, $http, focusController, $timeo
      * Select ufiltered data from the collection of all movies
      * The result is sorted by popularity in the descending order
      *****************************************************************************/
-    $http.get("http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&language=he-IL&page=1"+$scope.voteCount).then(function(response) {
+    $http.get("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&language=he-IL&page=1"+$scope.voteCount).then(function(response) {
         $scope.myData = response.data.results;
         $scope.lastRetrievedPage = 1;
         $scope.totalPages = response.data.total_pages;
