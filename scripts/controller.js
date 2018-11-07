@@ -471,7 +471,7 @@ myApp.controller('myController', function($scope, $http, focusController, $timeo
         console.log("movieID: " + movieID);
         $scope.recommendedMovies = [];
         // use movieID to update $scope.currentMovieInfo from TMDB
-        $http.get("http://api.themoviedb.org/3/movie/" + $scope.currentMovieID + "?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&language=he-IL&append_to_response=trailers,credits,recommendations").then(function(response) {
+        $http.get("https://api.themoviedb.org/3/movie/" + $scope.currentMovieID + "?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&language=he-IL&append_to_response=trailers,credits,recommendations").then(function(response) {
             var temp = response.data;
             var backdrop_path = temp.backdrop_path;
             var poster_path = temp.poster_path;
