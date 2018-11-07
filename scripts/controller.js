@@ -735,7 +735,7 @@ myApp.controller('myController', function($scope, $http, focusController, $timeo
         }
         console.log("actor id: " + $scope.actor.id);
         /*  */
-        $http.get("http://api.themoviedb.org/3/person/" + actorID + "?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39").then(function(response) {
+        $http.get("https://api.themoviedb.org/3/person/" + actorID + "?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39").then(function(response) {
             $scope.actorInfo = response.data;
             if (!response.data.biography) {
                 $scope.actorInfo.biography = "No available biography";
@@ -747,7 +747,7 @@ myApp.controller('myController', function($scope, $http, focusController, $timeo
                 $scope.currentDepth = $scope.DEPTH.ACTOR_INFO;
 
                 $scope.actorInfo.currentImage = "images/spinner.gif";
-                $http.get("http://api.themoviedb.org/3/person/" + actorID + "/images?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39").then(function(response2) {
+                $http.get("https://api.themoviedb.org/3/person/" + actorID + "/images?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39").then(function(response2) {
                     $scope.actorImages = response2.data.profiles;
                     //console.log("profiles length: " + $scope.actorImages.length);
                     if ($scope.actorImages.length === 0) {
@@ -979,7 +979,7 @@ myApp.controller('myController', function($scope, $http, focusController, $timeo
         focusController.disable('homeFromActorScreen');
         $scope.currentDepth = $scope.DEPTH.ACTOR_MOVIES;
 
-        $http.get("http://api.themoviedb.org/3/discover/movie?with_people=" + $scope.actor.id + "&sort_by=popularity.desc&api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&language=he-IL&page=1"+ $scope.voteCount).then(function(response) {
+        $http.get("https://api.themoviedb.org/3/discover/movie?with_people=" + $scope.actor.id + "&sort_by=popularity.desc&api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&language=he-IL&page=1"+ $scope.voteCount).then(function(response) {
             $scope.myData2 = response.data.results;
             $scope.lastRetrievedPage2 = 1;
             $scope.totalPages2 = response.data.total_pages;
@@ -1043,7 +1043,7 @@ myApp.controller('myController', function($scope, $http, focusController, $timeo
      ****************************************************************************/
     $scope.getNextPage2 = function() { // for actor's movies screen
         if ($scope.lastRetrievedPage2 < $scope.totalPages2) {
-            $http.get("http://api.themoviedb.org/3/discover/movie?with_people=" + $scope.actor.id + "&sort_by=popularity.desc&api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&language=he-IL"+ $scope.voteCount +"&page=" + (1 + $scope.lastRetrievedPage2)).then(function(response) {
+            $http.get("https://api.themoviedb.org/3/discover/movie?with_people=" + $scope.actor.id + "&sort_by=popularity.desc&api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&language=he-IL"+ $scope.voteCount +"&page=" + (1 + $scope.lastRetrievedPage2)).then(function(response) {
                 $scope.myData2 = response.data.results;
                 $scope.lastRetrievedPage2++;
                 var temp = [];
@@ -1118,9 +1118,9 @@ myApp.controller('myController', function($scope, $http, focusController, $timeo
      ****************************************************************************/
     $scope.updateDataFromDB = function() {
         console.log("in updateDataFromDB");
-        var request = "http://api.themoviedb.org/3/discover/movie?sort_by=" + $scope.sortingCriteria + "&api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39" + $scope.filteringGenre + $scope.voteCount + "&language=he-IL&page=1";
+        var request = "https://api.themoviedb.org/3/discover/movie?sort_by=" + $scope.sortingCriteria + "&api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39" + $scope.filteringGenre + $scope.voteCount + "&language=he-IL&page=1";
         if ($scope.filteringCriteria !== "") {
-            request = "http://api.themoviedb.org/3/movie" + $scope.filteringCriteria + "?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&sort_by=" + $scope.sortingCriteria + $scope.voteCount +  "&language=he-IL&page=1";
+            request = "https://api.themoviedb.org/3/movie" + $scope.filteringCriteria + "?api_key=e88aa9ee18d8bb7b8395fd9fcc33cb39&sort_by=" + $scope.sortingCriteria + $scope.voteCount +  "&language=he-IL&page=1";
         }
         console.log("request: "+request);
         $scope.movies = [];
