@@ -1,6 +1,8 @@
 # BaLiSeret
-Movie Search Application for Samsung Smart TV based on TIZEN OS\
-The app shows list of the movies using tmdb API 
+Movie Search Engine application for Samsung Smart TV.\
+Created using HTML5, JS, AngularJS and CAPH.\
+Integrated with APIs (TMDB, YouTube, et al.).\
+Provided Hebrew localization.
 
 ## Demo
 [![Sample Run](https://raw.githubusercontent.com/orlovD/BaLiSeret/master/demoScreen.png)](https://orlovd.github.io/BaLiSeret/)
